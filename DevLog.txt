@@ -1,58 +1,6 @@
 A3POINT14 Dev Log
 Remember to add to the Dev Log EVERY TIME you make a commit!!
 
-2016-12-02
-Chloe: created repo, sent invites to repo for everyone to become "collaborators", made this text file, linked repo to a submodule in upgraded-parakeet
-
-
-
-2016-12-03
-
-
-
-
-2016-12-04
-
-
-
-
-2016-12-05
-
-
-
-
-2016-12-06
-
-
-
-
-2016-12-07
-
-
-
-
-2016-12-08
-
-
-
-
-2016-12-09
-
-
-
-
-2016-12-10
-
-
-
-
-2016-12-11
-
-
-
-
-2016-12-12
-
-
-
+chloeD -- 2016-12-02 17:21
+created repo, sent invites to repo for everyone to become "collaborators", made this text file, linked repo to a submodule in upgraded-parakeet
 
