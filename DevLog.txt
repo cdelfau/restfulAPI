@@ -18,3 +18,6 @@ updated DESIGN.pdf with information for the weather component of the project (co
 
 chloeD — 2016-12-04 21:59
 read over DESIGN.pdf one last time and push it to the git
+
+billyW -- 2016-12-05 2:01
+got a basic sample with openweathermap api working
