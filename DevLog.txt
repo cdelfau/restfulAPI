@@ -21,3 +21,6 @@ read over DESIGN.pdf one last time and push it to the git
 
 billyW -- 2016-12-05 2:01
 got a basic sample with openweathermap api working
+
+chloeD — 2016-12-05 16:29
+today in class we went over our design document and got some feedback, which was overwhelmingly positive (we are keeping our weather and location idea, which is a change from the initial youtube/spotify idea, but we’re on track and the API’s have been tested!); I have started working on a schedule for the dates that portions of the project will be due (we are going to go over it tomorrow as a team to make sure everyone knows exactly what they are responsible for and for when)
