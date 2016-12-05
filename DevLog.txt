@@ -4,11 +4,17 @@ Remember to add to the Dev Log EVERY TIME you make a commit!!
 chloeD -- 2016-12-02 17:21
 created repo, sent invites to repo for everyone to become "collaborators", made this text file, linked repo to a submodule in upgraded-parakeet
 
-haley -- 2016-12-04 16:15
+jamesW — 2016-12-04
+
+
+haleyZ -- 2016-12-04 16:15
 researched APIs, registered for MTA API
 
-haley -- 2016-12-04 17:00
+haleyZ -- 2016-12-04 17:00
 updated DESIGN pdf with site map and component map, clarified the purpose and features of the project
 
-billy -- 2016-12-04 17:48
+billyW -- 2016-12-04 17:48
 updated DESIGN.pdf with information for the weather component of the project (component map)
+
+chloeD — 2016-12-04 21:59
+read over DESIGN.pdf one last time and push it to the git
