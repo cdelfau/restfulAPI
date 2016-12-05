@@ -4,5 +4,8 @@ Remember to add to the Dev Log EVERY TIME you make a commit!!
 chloeD -- 2016-12-02 17:21
 created repo, sent invites to repo for everyone to become "collaborators", made this text file, linked repo to a submodule in upgraded-parakeet
 
-haley -- 2016-12-04 16:00
+haley -- 2016-12-04 16:15
+researched APIs, registered for MTA API
+
+haley -- 2016-12-04 17:00
 updated DESIGN doc with site map and component map, clarified the purpose and features of the project
