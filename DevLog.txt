@@ -8,4 +8,7 @@ haley -- 2016-12-04 16:15
 researched APIs, registered for MTA API
 
 haley -- 2016-12-04 17:00
-updated DESIGN doc with site map and component map, clarified the purpose and features of the project
+updated DESIGN pdf with site map and component map, clarified the purpose and features of the project
+
+billy -- 2016-12-04 17:48
+updated DESIGN.pdf with information for the weather component of the project (component map)
