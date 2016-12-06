@@ -4,8 +4,8 @@ Remember to add to the Dev Log EVERY TIME you make a commit!!
 chloeD -- 2016-12-02 17:21
 created repo, sent invites to repo for everyone to become "collaborators", made this text file, linked repo to a submodule in upgraded-parakeet
 
-jamesW — 2016-12-04
-
+jamesW — 2016-12-04 18:30
+contributed to DESIGN doc 
 
 haleyZ -- 2016-12-04 16:15
 researched APIs, registered for MTA API
@@ -27,3 +27,9 @@ today in class we went over our design document and got some feedback, which was
 
 billyW - 2016-12-06 14:03
 added use of dark sky api. discussed which parts of weather api to use. started with gps coordinates in google maps api.
+
+chloeD — 2016-12-05 14:04
+met with everyone to see how things were going; cerated a schedule as a group to know who was responsible for what and what components are due when (will scan and upload when I get home); updated DESIGN doc (will redownload as a pdf and upload revised version)
+
+chloeD — 2016-12-05 17:23
+updated and uploaded new DESIGN doc; uploaded schedule; check-ins with everyone tonight 
