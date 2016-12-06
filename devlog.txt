@@ -28,8 +28,11 @@ today in class we went over our design document and got some feedback, which was
 billyW - 2016-12-06 14:03
 added use of dark sky api. discussed which parts of weather api to use. started with gps coordinates in google maps api.
 
-chloeD — 2016-12-05 14:04
+chloeD — 2016-12-06 14:04
 met with everyone to see how things were going; cerated a schedule as a group to know who was responsible for what and what components are due when (will scan and upload when I get home); updated DESIGN doc (will redownload as a pdf and upload revised version)
 
-chloeD — 2016-12-05 17:23
+chloeD — 2016-12-06 17:23
 updated and uploaded new DESIGN doc; uploaded schedule; check-ins with everyone tonight 
+
+billyW - 2016-12-06 18:32
+abandoned google maps api for determining gps in favor of using openweathermap to determine gps via zip code. got api calls with dark sky api working. put in a try catch block to check if the dark sky api limit has been reached so that openweathermap data will be instead be displayed, once implemented (you can personally put a limit on dark sky api calls to test this)
