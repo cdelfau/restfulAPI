@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block body %}
+<div class="row">
+    <div class="col-md-6 col-md-offset-3">
+        {% include "message.html" %}
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h2 class="panel-title">Login</h2>
+            </div>
+            <div class="panel-body">
+                <form action="/login" method="POST">
+                    <input name="username" type="text" class="form-control" placeholder="Username" required>
+                    <br>
+                    <input name="password" type="password" class="form-control" placeholder="Password" required>
+                    <br>
+                    <input type="submit" class="btn btn-success" value="Login">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
