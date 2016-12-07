@@ -51,3 +51,6 @@ tried for a long time to figure out how to use the protoc stuff; gave up
 
 haleyZ -- 2016-12-07 00:13
 wrote up beginnings of getting subway status (manually parsing since the protoc stuff did not go well...)
+
+haleyZ -- 2016-12-07 14:00
+in class, finished the function to get table of subway statuses
