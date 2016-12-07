@@ -4,7 +4,7 @@ Remember to add to the Dev Log EVERY TIME you make a commit!!
 chloeD -- 2016-12-02 17:21
 created repo, sent invites to repo for everyone to become "collaborators", made this text file, linked repo to a submodule in upgraded-parakeet
 
-jamesW — 2016-12-04 18:30
+jamesW -- 2016-12-04 18:30
 contributed to DESIGN doc 
 
 haleyZ -- 2016-12-04 16:15
@@ -16,23 +16,29 @@ updated DESIGN pdf with site map and component map, clarified the purpose and fe
 billyW -- 2016-12-04 17:48
 updated DESIGN.pdf with information for the weather component of the project (component map)
 
-chloeD — 2016-12-04 21:59
+chloeD -- 2016-12-04 21:59
 read over DESIGN.pdf one last time and push it to the git
 
-billyW -- 2016-12-05 2:01
+billyW -- 2016-12-05 14:01
 got a basic sample with openweathermap api working
 
-chloeD — 2016-12-05 16:29
-today in class we went over our design document and got some feedback, which was overwhelmingly positive (we are keeping our weather and location idea, which is a change from the initial youtube/spotify idea, but we’re on track and the API’s have been tested!); I have started working on a schedule for the dates that portions of the project will be due (we are going to go over it tomorrow as a team to make sure everyone knows exactly what they are responsible for and for when)
+haleyZ -- 2016-12-06 14:00
+researched more about GTFS format that the MTA uses
 
-billyW - 2016-12-06 14:03
+billyW -- 2016-12-06 14:03
 added use of dark sky api. discussed which parts of weather api to use. started with gps coordinates in google maps api.
 
-chloeD — 2016-12-06 14:04
+chloeD -- 2016-12-06 14:04
 met with everyone to see how things were going; cerated a schedule as a group to know who was responsible for what and what components are due when (will scan and upload when I get home); updated DESIGN doc (will redownload as a pdf and upload revised version)
 
-chloeD — 2016-12-06 17:23
+chloeD -- 2016-12-05 16:29
+today in class we went over our design document and got some feedback, which was overwhelmingly positive (we are keeping our weather and location idea, which is a change from the initial youtube/spotify idea, but we’re on track and the API’s have been tested!); I have started working on a schedule for the dates that portions of the project will be due (we are going to go over it tomorrow as a team to make sure everyone knows exactly what they are responsible for and for when)
+
+chloeD -- 2016-12-06 17:23
 updated and uploaded new DESIGN doc; uploaded schedule; check-ins with everyone tonight 
 
-billyW - 2016-12-06 18:32
+billyW -- 2016-12-06 18:32
 abandoned google maps api for determining gps in favor of using openweathermap to determine gps via zip code. got api calls with dark sky api working. put in a try catch block to check if the dark sky api limit has been reached so that openweathermap data will be instead be displayed, once implemented (you can personally put a limit on dark sky api calls to test this)
+
+haleyZ -- 2016-12-06 21:48
+figured out how to compile a .proto file to allow me to read GTFS data that is provided by the MTA
