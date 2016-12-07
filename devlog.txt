@@ -5,7 +5,7 @@ chloeD -- 2016-12-02 17:21
 created repo, sent invites to repo for everyone to become "collaborators", made this text file, linked repo to a submodule in upgraded-parakeet
 
 jamesW -- 2016-12-04 18:30
-contributed to DESIGN doc 
+contributed to DESIGN doc
 
 haleyZ -- 2016-12-04 16:15
 researched APIs, registered for MTA API
@@ -38,7 +38,7 @@ chloeD -- 2016-12-05 16:29
 today in class we went over our design document and got some feedback, which was overwhelmingly positive (we are keeping our weather and location idea, which is a change from the initial youtube/spotify idea, but we’re on track and the API’s have been tested!); I have started working on a schedule for the dates that portions of the project will be due (we are going to go over it tomorrow as a team to make sure everyone knows exactly what they are responsible for and for when)
 
 chloeD -- 2016-12-06 17:23
-updated and uploaded new DESIGN doc; uploaded schedule; check-ins with everyone tonight 
+updated and uploaded new DESIGN doc; uploaded schedule; check-ins with everyone tonight
 
 billyW -- 2016-12-06 18:32
 abandoned google maps api for determining gps in favor of using openweathermap to determine gps via zip code. got api calls with dark sky api working. put in a try catch block to check if the dark sky api limit has been reached so that openweathermap data will be instead be displayed, once implemented (you can personally put a limit on dark sky api calls to test this)
@@ -57,3 +57,6 @@ in class, finished the function to get table of subway statuses
 
 billyW -- 2016-12-07 14:06
 added a return type for the weather function
+
+jamesW -- 2016-12-07 17:16
+Added login and registration functionality
