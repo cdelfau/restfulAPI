@@ -1,3 +1,9 @@
+import hashlib
+import os
+
+from flask import Flask, render_template, request, session, redirect, url_for
+from flask import current_app as app
+
 import urllib2, json, time
 from urllib2 import HTTPError
 
@@ -14,11 +20,9 @@ def getInfo(ZIP):
     
     ZIP = int(ZIP)
 
-    a = open("utils/weasecre",'r')
-    s = a.read()
-    l = s.split(',',-1)    
-    
-    key1 = l[0]
+    with app.app_context():
+        key1 = app.config["OPENWEATHER_KEY"]
+        key2 = app.config["DARKSKY_KEY"]
     
     #OpenWeatherMap to get coordinates
     url = "http://api.openweathermap.org/data/2.5/weather?zip=%d,us" % (ZIP)
@@ -32,8 +36,6 @@ def getInfo(ZIP):
     #MAKE SURE TO CONVERT TEMP
     #OPENWEATHER IS IN K
     #DARK SKY IS IN C
-
-    key2 = l[1]
 
     #Dark Sky API  
     url2 = "https://api.darksky.net/forecast/%s/" % (key2)
@@ -82,8 +84,20 @@ def getInfo(ZIP):
         info['sunrise'] = time.strftime('%H:%M:%S', time.localtime(owm['sys']['sunrise']))
         info['sunset'] = time.strftime('%H:%M:%S', time.localtime(owm['sys']['sunset']))
 
-    return info  
+    return info
 
-d = getInfo(10282)
-for key, value in d.iteritems():
-    print str(key) + ": " + str(value)
+app = Flask(__name__)
+
+@app.route("/")
+def run():
+    d = getInfo(10282)
+    string = ""
+    for key in d.iteritems():
+        string += str(key) + ": " + str(value) + "\n"
+    return string
+
+if __name__ == "__main__":
+
+    app.debug = True
+    app.run()
+
