@@ -9,13 +9,20 @@ def getInfo():
     return getInfo(10282)
 
 def getInfo(ZIP):
-    info = {}
 
+    info = {}
+    
     ZIP = int(ZIP)
+
+    a = open("utils/weather.secret_key",'r')
+    s = a.read()
+    l = s.split(',',-1)    
+    
+    key1 = l[0]
     
     #OpenWeatherMap to get coordinates
     url = "http://api.openweathermap.org/data/2.5/weather?zip=%d,us" % (ZIP)
-    url += "&APPID=bc5b1b41b7a0cec8b093b8c0271d6ee0"
+    url += "&APPID=%s" % (key1)
     u = urllib2.urlopen(url)
     response = u.read()
     owm = json.loads( response )
@@ -26,17 +33,16 @@ def getInfo(ZIP):
     #OPENWEATHER IS IN K
     #DARK SKY IS IN C
 
+    key2 = l[1]
 
     #Dark Sky API  
-    url2 = "https://api.darksky.net/forecast/fcece9a1ddf04aa5db8b1339edec5e81/"
+    url2 = "https://api.darksky.net/forecast/%s/" % (key2)
     url2 += ("%s,%s") % (lat,lon)
     try: 
         u2 = urllib2.urlopen(url2)
-
-
         response2 = u2.read()
         ds = json.loads(response2)
-
+        
         info["summaryNow"] = ds['currently']['summary']
         info["summaryHour"] = ds['minutely']['summary']
         info["summaryDay"] = ds['hourly']['summary']
@@ -59,11 +65,11 @@ def getInfo(ZIP):
     except HTTPError:
         
         #print (time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(owm['sys']['sunset'])))
-
-        info["summaryNow"] = owm['weather']['main'] + ": " + owm['weather']['description']
+        
+        info["summaryNow"] = [str(owm['weather'][0]['main']),str(owm['weather'][0]['description'])]
         info["summaryHour"] = None
         info["summaryDay"] = None
-        info["icon"] = owm['weather']['icon']
+        info["icon"] = owm['weather'][0]['icon']
         info["precipProb"] = None
         info['precipType'] = None
         info['temp'] = owm['main']['temp']
@@ -78,6 +84,6 @@ def getInfo(ZIP):
 
     return info  
 
-#d = getInfo(10282)
-#for key, value in d.iteritems():
-#    print str(key) + ": " + str(value)
+d = getInfo(10282)
+for key, value in d.iteritems():
+    print str(key) + ": " + str(value)
