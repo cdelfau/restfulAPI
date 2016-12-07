@@ -3,6 +3,7 @@ import os
 
 from flask import Flask, render_template, request, session, redirect, url_for
 
+import config
 import setup
 from utils import user
 
@@ -68,15 +69,8 @@ def inject_username():
 if __name__ == "__main__":
 
     setup.initialize_tables()
-
-    # Generate and store secret key if it doesn't already exist
-    with open(".secret_key", "a+b") as f:
-        secret_key = f.read()
-        if not secret_key:
-            secret_key = os.urandom(64)
-            f.write(secret_key)
-            f.flush()
-        app.secret_key = secret_key
+    app.secret_key = config.SECRET_KEY
+    app.config.from_object(config.options)
 
     app.debug = True
     app.run()

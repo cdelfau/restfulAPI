@@ -3,3 +3,4 @@
 *.pyc
 .secret_key
 database.db
+.env
