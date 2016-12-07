@@ -70,7 +70,7 @@ if __name__ == "__main__":
 
     setup.initialize_tables()
     app.secret_key = config.SECRET_KEY
-    app.config.from_object(config.options)
+    app.config.from_object(config)
 
     app.debug = True
     app.run()

@@ -20,4 +20,4 @@ if os.path.exists(".env"):
         if "=" in line:
             key = line.split("=")[0]
             value = line.split(key + "=")[1].strip("\n").strip("\r")
-            options[key] = value
+            globals()[key] = value
