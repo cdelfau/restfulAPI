@@ -5,73 +5,79 @@ from urllib2 import HTTPError
 #https://darksky.net/dev/docs/forecast
 #https://openweathermap.org/current
 
-#OpenWeatherMap to get coordinates
-url = "http://api.openweathermap.org/data/2.5/weather?zip=10282,us"
-url += "&APPID=bc5b1b41b7a0cec8b093b8c0271d6ee0"
+def getInfo():
+    return getInfo(10282)
 
-u = urllib2.urlopen(url)
-response = u.read()
-owm = json.loads( response )
-lat = owm['coord']['lat']
-lon = owm['coord']['lon']
-print ("LAT: " + lat)
-print ("LON: " + lon)
+def getInfo(ZIP):
+    info = {}
 
-#MAKE SURE TO CONVERT TEMP
-#OPENWEATHER IS IN K
-#DARK SKY IS IN C
+    ZIP = int(ZIP)
+    
+    #OpenWeatherMap to get coordinates
+    url = "http://api.openweathermap.org/data/2.5/weather?zip=%d,us" % (ZIP)
+    url += "&APPID=bc5b1b41b7a0cec8b093b8c0271d6ee0"
+    u = urllib2.urlopen(url)
+    response = u.read()
+    owm = json.loads( response )
+    lat = owm['coord']['lat']
+    lon = owm['coord']['lon']
 
-
-#Dark Sky API  
-url2 = "https://api.darksky.net/forecast/fcece9a1ddf04aa5db8b1339edec5e81/"
-url2 += ("%s,%s") % (lat,lon)
-try: 
-    u2 = urllib2.urlopen(url2)
+    #MAKE SURE TO CONVERT TEMP
+    #OPENWEATHER IS IN K
+    #DARK SKY IS IN C
 
 
-    response2 = u2.read()
-    ds = json.loads(response2)
+    #Dark Sky API  
+    url2 = "https://api.darksky.net/forecast/fcece9a1ddf04aa5db8b1339edec5e81/"
+    url2 += ("%s,%s") % (lat,lon)
+    try: 
+        u2 = urllib2.urlopen(url2)
 
 
-    #summary
-    #icon
-    #precipProbab
-    #temp (also min/max for day and when)
-    #humidity
-    #windspeed
-    #visibility
-    #sunrise / sunset
+        response2 = u2.read()
+        ds = json.loads(response2)
 
+        info["summaryNow"] = ds['currently']['summary']
+        info["summaryHour"] = ds['minutely']['summary']
+        info["summaryDay"] = ds['hourly']['summary']
+        info['icon'] = ds['currently']['icon']
+        info['precipProb'] = ds['currently']['precipProbability']
+        try:
+            info['precipType'] = ds['currently']['precipType']
+        except:
+            info['precipType'] = None
+        info['temp'] = ds['currently']['temperature']
+        info['minTemp'] = ds['daily']['data'][0]['temperatureMin']
+        info['maxTemp'] = ds['daily']['data'][0]['temperatureMax']
+        info['minTempTime'] = time.strftime('%H:%M:%S', time.localtime(ds['daily']['data'][0]['temperatureMinTime']))
+        info['maxTempTime'] = time.strftime('%H:%M:%S', time.localtime(ds['daily']['data'][0]['temperatureMaxTime']))
+        info['humidity'] = ds['currently']['humidity']       # 0 to 1 scale
+        info['visibility'] = ds['currently']['visibility']     #in km
+        info['sunrise'] = time.strftime('%H:%M:%S', time.localtime(ds['daily']['data'][0]['sunriseTime']))
+        info['sunset'] = time.strftime('%H:%M:%S', time.localtime(ds['daily']['data'][0]['sunsetTime']))
+    
+    except HTTPError:
+        
+        #print (time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(owm['sys']['sunset'])))
 
-    #minutely or hourly or currently?
-    print ds['currently']['summary']
-    print ds['currently']['icon']
-    print ds['currently']['precipProbability']
-    print ds['currently']['precipType']
-    print ds['currently']['temperature']
-    print ds['daily']['data'][0]['temperatureMin']
-    print time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(ds['daily']['data'][0]['temperatureMinTime']))
-    print ds['daily']['data'][0]['temperatureMax']
-    print time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(ds['daily']['data'][0]['temperatureMaxTime']))
-    print ds['currently']['humidity']       # 0 to 1 scale
-    print ds['currently']['visibility']     #in km
+        info["summaryNow"] = owm['weather']['main'] + ": " + owm['weather']['description']
+        info["summaryHour"] = None
+        info["summaryDay"] = None
+        info["icon"] = owm['weather']['icon']
+        info["precipProb"] = None
+        info['precipType'] = None
+        info['temp'] = owm['main']['temp']
+        info['minTemp'] = owm['main']['temp_min']
+        info['maxTemp'] = owm['main']['temp_max']
+        info['minTempTime'] = None
+        info['maxTempTime'] = None
+        info['humidity'] = owm['main']['humidity'] / 100
+        info['visibility'] = None
+        info['sunrise'] = time.strftime('%H:%M:%S', time.localtime(owm['sys']['sunrise']))
+        info['sunset'] = time.strftime('%H:%M:%S', time.localtime(owm['sys']['sunset']))
 
-except HTTPError: 
+    return info  
 
-    #if darksky reaches limit
-    #weather
-    #wind
-    #temp (and min max)
-    #humidity
-    #sunrise / sunset
-
-    print (owm['weather'])
-    print (owm['wind'])
-    print (owm['main']['temp'])
-    print (owm['main']['temp_min'])
-    print (owm['main']['temp_max'])
-    print (owm['main']['humidity'])
-
-    #print (time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(owm['sys']['sunset'])))
-    print (time.strftime('%H:%M:%S', time.localtime(owm['sys']['sunrise'])))
-    print (time.strftime('%H:%M:%S', time.localtime(owm['sys']['sunset'])))
+#d = getInfo(10282)
+#for key, value in d.iteritems():
+#    print str(key) + ": " + str(value)
