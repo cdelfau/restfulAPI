@@ -14,7 +14,7 @@ def getInfo(ZIP):
     
     ZIP = int(ZIP)
 
-    a = open("utils/weather.secret_key",'r')
+    a = open("utils/weasecre",'r')
     s = a.read()
     l = s.split(',',-1)    
     
