@@ -5,7 +5,7 @@ from flask import Flask, render_template, request, session, redirect, url_for
 
 import config
 import setup
-from utils import user
+from utils import user, weather
 
 app = Flask(__name__)
 
@@ -59,12 +59,22 @@ def logout():
     session.clear()
     return redirect(url_for("index"))
 
+
+@app.route("/weatherTest")
+def weatherTest():
+    d = weather.getInfo(10282)
+    string = ""
+    for key in d.iteritems():
+        string += str(key) + ": " + str(value) + "\n"
+    return string
+
 @app.context_processor
 def inject_username():
     """ Inject the username into each template, so we can render the navbar correctly. """
     if session.get("username"):
         return dict(username=session["username"])
     return dict()
+
 
 if __name__ == "__main__":
 
