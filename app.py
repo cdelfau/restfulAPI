@@ -61,7 +61,7 @@ def logout():
 
 @app.route("/test")
 def test():
-    return weather.getInfo(10282)
+    return str(weather.getInfo(10282))
 
 @app.context_processor
 def inject_username():
