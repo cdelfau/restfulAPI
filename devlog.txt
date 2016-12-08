@@ -55,6 +55,9 @@ wrote up beginnings of getting subway status (manually parsing since the protoc 
 haleyZ -- 2016-12-07 14:00
 in class, finished the function to get table of subway statuses
 
+chloeD -- 2016-12-07 14:05
+met with everyone to check in with them (see what they did so far, what problems they ran into, regrouped and planned some potential additional functionalities); updated the DESIGN doc to better reflect our plans
+
 billyW -- 2016-12-07 14:06
 added a return type for the weather function
 
