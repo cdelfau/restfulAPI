@@ -66,3 +66,6 @@ Added login and registration functionality
 
 billyW -- 2016-12-07 19:38
 adjusted weather api keys location and changed code to fit
+
+jamesW -- 2016-12-07 19:51
+Created basic layout for the home page
