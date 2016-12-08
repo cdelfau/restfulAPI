@@ -5,7 +5,7 @@ from flask import Flask, render_template, request, session, redirect, url_for
 
 import config
 import setup
-from utils import user, weather
+from utils import user, weather, transit
 
 app = Flask(__name__)
 
@@ -68,12 +68,19 @@ def test():
         string += (str(key) + ": " + str(value))
     return string
 
+@app.route("/bus")
+def busTimes():
+    #return str(transit.listBusLocations("Q28"))
+    return transit.listStopsOnRoute("Q28")
+
+    
 @app.context_processor
 def inject_username():
     """ Inject the username into each template, so we can render the navbar correctly. """
     if session.get("username"):
         return dict(username=session["username"])
     return dict()
+
 
 
 if __name__ == "__main__":

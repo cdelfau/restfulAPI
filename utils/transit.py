@@ -1,11 +1,6 @@
 import urllib
-
-
-
-
-#print text
-
-
+import json
+from flask import current_app as app
 
 #takes a string of html and the tag to look for
 #returns text found within the first occurrence of TAG
@@ -28,18 +23,6 @@ def gangSignify(text):
     text = text.replace("&lt;", "<")
     text = text.replace("&gt;", ">")
     return text;
-
-
-def constructStatusDetails(rawText):
-    ret = ""
-    details = gangSignify(statusDetails)
-    while (details.find("</b>") != -1):
-        ret += getInfoFromInsideTags(details, "b") + "<br>"
-        details = details.replace("<b>", "", 1)
-        details = details.replace("</b>", "", 1)
-
-    ret = ret.replace("\n", "<br>")
-    return ret;
 
 def tableifySubwayStatus(d):
     ret = ""
@@ -81,3 +64,28 @@ def getSubwayStatus():
     return tableifySubwayStatus(dictifySubwayStatus(subwayLines))
 
 print getSubwayStatus()
+
+def listBusLocations(busNum):
+    with app.app_context():
+        key = app.config["BUSTIME"]
+        response = urllib.urlopen('http://api.prod.obanyc.com/api/siri/vehicle-monitoring.json?key=' + key + "&LineRef=" + busNum+ "&DirectionRef=0")
+        text = json.loads(response.read())
+        listOfBuses = text['Siri']['ServiceDelivery']['VehicleMonitoringDelivery'][0]['VehicleActivity']
+        
+        locations = []
+        for bus in listOfBuses:
+            locations.append( bus['MonitoredVehicleJourney']['MonitoredCall']['StopPointName'])
+            
+        return locations
+        
+def listStopsOnRoute(busNum):
+    with app.app_context():
+        key = app.config["BUSTIME"]
+        response = urllib.urlopen('http://bustime.mta.info/api/where/stops-for-route/MTA%20NYCT_' + busNum + '.json?key=' + key + '&includePolylines=false&version=2')
+        text = json.loads(response.read())
+        listOfStops = text['data']['references']['stops']
+        stopNames = ""
+        #        stopNames = []
+        for stop in listOfStops:
+            stopNames += str( [stop['name'], stop['direction']]) + "<br>"
+        return stopNames
