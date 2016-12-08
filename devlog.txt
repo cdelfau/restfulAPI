@@ -69,3 +69,6 @@ adjusted weather api keys location and changed code to fit
 
 jamesW -- 2016-12-07 19:51
 Created basic layout for the home page
+
+billyW -- 2016-12-08 14:01
+looked at google maps embed and last.fm apis
