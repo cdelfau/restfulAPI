@@ -60,12 +60,12 @@ def logout():
     return redirect(url_for("index"))
 
 
-@app.route("/weatherTest")
-def weatherTest():
+@app.route("/test")
+def test():
     d = weather.getInfo(10282)
     string = ""
-    for key in d.iteritems():
-        string += str(key) + ": " + str(value) + "\n"
+    for key,value in d.iteritems():
+        string += (str(key) + ": " + str(value))
     return string
 
 @app.context_processor
