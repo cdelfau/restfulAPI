@@ -78,3 +78,6 @@ looked at google maps embed and last.fm apis
 
 chloeD —- 2016-12-08 14:05
 met with everyone; facilitated discussions amongst members to help plan for component merging; helped plan for additional components because Billy finished with eh weather stuff
+
+haleyZ —- 2016-12-08 17:00
+successfully pull the locations of the buses en route using SIRI API; ran into issue with getting all stops on the route using OBA API...
