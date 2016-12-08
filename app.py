@@ -5,7 +5,7 @@ from flask import Flask, render_template, request, session, redirect, url_for
 
 import config
 import setup
-from utils import user
+from utils import user, weather
 
 app = Flask(__name__)
 
@@ -58,6 +58,10 @@ def register():
 def logout():
     session.clear()
     return redirect(url_for("index"))
+
+@app.route("/test")
+def test():
+    return weather.getInfo(10282)
 
 @app.context_processor
 def inject_username():

@@ -17,13 +17,13 @@ def getInfo():
 def getInfo(ZIP):
 
     info = {}
-    
+
     ZIP = int(ZIP)
 
     with app.app_context():
         key1 = app.config["OPENWEATHER_KEY"]
         key2 = app.config["DARKSKY_KEY"]
-    
+
     #OpenWeatherMap to get coordinates
     url = "http://api.openweathermap.org/data/2.5/weather?zip=%d,us" % (ZIP)
     url += "&APPID=%s" % (key1)
@@ -37,14 +37,14 @@ def getInfo(ZIP):
     #OPENWEATHER IS IN K
     #DARK SKY IS IN C
 
-    #Dark Sky API  
+    #Dark Sky API
     url2 = "https://api.darksky.net/forecast/%s/" % (key2)
     url2 += ("%s,%s") % (lat,lon)
-    try: 
+    try:
         u2 = urllib2.urlopen(url2)
         response2 = u2.read()
         ds = json.loads(response2)
-        
+
         info["summaryNow"] = ds['currently']['summary']
         info["summaryHour"] = ds['minutely']['summary']
         info["summaryDay"] = ds['hourly']['summary']
@@ -63,11 +63,11 @@ def getInfo(ZIP):
         info['visibility'] = ds['currently']['visibility']     #in km
         info['sunrise'] = time.strftime('%H:%M:%S', time.localtime(ds['daily']['data'][0]['sunriseTime']))
         info['sunset'] = time.strftime('%H:%M:%S', time.localtime(ds['daily']['data'][0]['sunsetTime']))
-    
+
     except HTTPError:
-        
+
         #print (time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(owm['sys']['sunset'])))
-        
+
         info["summaryNow"] = [str(owm['weather'][0]['main']),str(owm['weather'][0]['description'])]
         info["summaryHour"] = None
         info["summaryDay"] = None
@@ -85,19 +85,3 @@ def getInfo(ZIP):
         info['sunset'] = time.strftime('%H:%M:%S', time.localtime(owm['sys']['sunset']))
 
     return info
-
-app = Flask(__name__)
-
-@app.route("/")
-def run():
-    d = getInfo(10282)
-    string = ""
-    for key in d.iteritems():
-        string += str(key) + ": " + str(value) + "\n"
-    return string
-
-if __name__ == "__main__":
-
-    app.debug = True
-    app.run()
-
