@@ -1,5 +1,8 @@
 A3POINT14 Dev Log
-Remember to add to the Dev Log EVERY TIME you make a commit!!
+Members: Haley Zheng, Chloe Delfau, James Wang, Billy Wong
+Project Manager: Chloe Delfau
+Project Name:
+
 
 chloeD -- 2016-12-02 17:21
 created repo, sent invites to repo for everyone to become "collaborators", made this text file, linked repo to a submodule in upgraded-parakeet
