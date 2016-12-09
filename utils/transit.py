@@ -90,15 +90,46 @@ def listStopsOnRoute(busNum):
         # listOfStopNames.sort()
         for stop in listOfStops:
             stopNames += stop['name'] + "<br>"
+
+"""
+    terminal1 = buses[0]['MonitoredVehicleJourney']['DestinationName']
+
+        busToTerm1 = []
+        busToTerm2 = []
+                
+        for bus in buses:
+            if bus['MonitoredVehicleJourney']['DestinationName'] == terminal1:
+                busToTerm1.append(bus['MonitoredVehicleJourney']['MonitoredCall']['Extensions']['Distances']['PresentableDistance'])
+            else:
+                busToTerm2.append(bus['MonitoredVehicleJourney']['MonitoredCall']['Extensions']['Distances']['PresentableDistance'])
+        return str(busToTerm1) + "<br><br>" + str(busToTerm2)
+        
+
+            """
+
         return stopNames
+
+    
 
 def getBusesRelativeToStop(busNum, stopID):
     with app.app_context():
         key = app.config["BUSTIME"]
         response = urllib.urlopen('http://bustime.mta.info/api/siri/stop-monitoring.json?key=' + key + '&OperatorRef=MTA&MonitoringRef=' + stopID + '&LineRef=MTA%20NYCT_' + busNum)
         text = json.loads(response.read())
+        
         retVal = ""
         buses = text['Siri']['ServiceDelivery']['StopMonitoringDelivery'][0]['MonitoredStopVisit']
+    
+        terminal1 = buses[0]['MonitoredVehicleJourney']['DestinationName']
+
+        busToTerm1 = []
+        busToTerm2 = []
+                
         for bus in buses:
-            retVal += bus['MonitoredVehicleJourney']['MonitoredCall']['Extensions']['Distances']['PresentableDistance'] + "<br>"
-        return retVal
+            if bus['MonitoredVehicleJourney']['DestinationName'] == terminal1:
+                busToTerm1.append(bus['MonitoredVehicleJourney']['MonitoredCall']['Extensions']['Distances']['PresentableDistance'])
+            else:
+                busToTerm2.append(bus['MonitoredVehicleJourney']['MonitoredCall']['Extensions']['Distances']['PresentableDistance'])
+        #retVal += bus['MonitoredVehicleJourney']['MonitoredCall']['Extensions']['Distances']['PresentableDistance'] + "<br>"
+ #       return retVal
+        return str(busToTerm1) + "<br><br>" + str(busToTerm2)

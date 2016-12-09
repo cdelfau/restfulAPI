@@ -90,3 +90,6 @@ Added basic form on the home page
 
 chloeD -- 2016-12-09 13:57
 met with each member to discuss the work that they have done, solve problems (paticularly the bus problem!), and plan for work over the weekend
+
+haleyZ -- 2016-12-09 14:05
+using the destination of buses to filter the ones going N or S
