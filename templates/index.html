@@ -1,39 +1,33 @@
 {% extends "base.html" %}
 
 {% block body %}
-<div class="jumbotron">
-</div>
-<div class="row">
-    <div class="col-md-6">
-        <div class="panel panel-default">
-            <div class="panel-body">
-                <h3>Weather</h3>
+<form method="POST" action="/result">
+    <div>
+        <div class="row">
+            <div class="col-md-3">
+                <input type="number" class="form-control" placeholder="Zip code">
             </div>
         </div>
-    </div>
-    <div class="col-md-6">
-        <div class="panel panel-default">
-            <div class="panel-body">
+        <label><input type="checkbox">Subway</label>
+        <label><input type="checkbox">LIRR</label>
+        <label><input type="checkbox">Bus</label>
 
-                <ul class="nav nav-tabs">
-                    <li class="active"><a data-toggle="tab" href="#lirr">LIRR</a></li>
-                    <li><a data-toggle="tab" href="#trains">Trains</a></li>
-                    <li><a data-toggle="tab" href="#buses">Buses</a></li>
-                </ul>
-
-                <div class="tab-content">
-                    <div id="lirr" class="tab-pane fade in active">
-                        <h3>LIRR</h3>
-                    </div>
-                    <div id="trains" class="tab-pane fade">
-                        <h3>Trains</h3>
-                    </div>
-                    <div id="buses" class="tab-pane fade">
-                        <h3>Buses</h3>
-                    </div>
+        <br>
+        <div class="row">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="borough">Borough:</label>
+                    <select name="borough" class="form-control" id="borough">
+                        <option>Queens</option>
+                        <option>Manhattan</option>
+                        <option>Bronx</option>
+                        <option>Brooklyn</option>
+                        <option>Staten Island</option>
+                    </select>
                 </div>
             </div>
         </div>
+        <input type="submit" class="btn btn-primary" value="Search">
     </div>
-</div>
+</form>
 {% endblock %}
