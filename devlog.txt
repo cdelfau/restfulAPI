@@ -84,3 +84,6 @@ successfully pull the locations of the buses en route using SIRI API; ran into i
 
 haleyZ -- 2016-12-09 10:10
 worked on getting the buses that are approaching a certain stop.
+
+jamesW -- 2016-12-09 11:49
+Added basic form on the home page
