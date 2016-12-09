@@ -63,8 +63,6 @@ def getSubwayStatus():
 
     return tableifySubwayStatus(dictifySubwayStatus(subwayLines))
 
-print getSubwayStatus()
-
 def listBusLocations(busNum):
     with app.app_context():
         key = app.config["BUSTIME"]
@@ -84,9 +82,14 @@ def listStopsOnRoute(busNum):
         response = urllib.urlopen('http://bustime.mta.info/api/where/stops-for-route/MTA%20NYCT_' + busNum + '.json?key=' + key + '&includePolylines=false&version=2')
         text = json.loads(response.read())
         listOfStops = text['data']['references']['stops']
+        return str(listOfStops)
+#        listOfStopNames = []
         stopNames = ""
+        # for stop in listOfStops:
+        #     listOfStopNames.append(stop['name'])
+        # listOfStopNames.sort()
         for stop in listOfStops:
-            stopNames += str( [stop['name'], stop['code']]) + "<br>"
+            stopNames += stop['name'] + "<br>"
         return stopNames
 
 def getBusesRelativeToStop(busNum, stopID):

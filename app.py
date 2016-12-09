@@ -70,7 +70,6 @@ def test():
 
 @app.route("/bus")
 def busTimes():
-    #return str(transit.listBusLocations("Q28"))
     return transit.listStopsOnRoute("Q28")
 
 @app.route("/stop")
