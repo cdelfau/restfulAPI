@@ -85,7 +85,17 @@ def listStopsOnRoute(busNum):
         text = json.loads(response.read())
         listOfStops = text['data']['references']['stops']
         stopNames = ""
-        #        stopNames = []
         for stop in listOfStops:
-            stopNames += str( [stop['name'], stop['direction']]) + "<br>"
+            stopNames += str( [stop['name'], stop['code']]) + "<br>"
         return stopNames
+
+def getBusesRelativeToStop(busNum, stopID):
+    with app.app_context():
+        key = app.config["BUSTIME"]
+        response = urllib.urlopen('http://bustime.mta.info/api/siri/stop-monitoring.json?key=' + key + '&OperatorRef=MTA&MonitoringRef=' + stopID + '&LineRef=MTA%20NYCT_' + busNum)
+        text = json.loads(response.read())
+        retVal = ""
+        buses = text['Siri']['ServiceDelivery']['StopMonitoringDelivery'][0]['MonitoredStopVisit']
+        for bus in buses:
+            retVal += bus['MonitoredVehicleJourney']['MonitoredCall']['Extensions']['Distances']['PresentableDistance'] + "<br>"
+        return retVal

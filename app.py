@@ -73,6 +73,9 @@ def busTimes():
     #return str(transit.listBusLocations("Q28"))
     return transit.listStopsOnRoute("Q28")
 
+@app.route("/stop")
+def busStop():
+    return transit.getBusesRelativeToStop("Q28", "501085")
     
 @app.context_processor
 def inject_username():

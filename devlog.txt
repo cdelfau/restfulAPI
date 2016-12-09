@@ -81,3 +81,6 @@ met with everyone; facilitated discussions amongst members to help plan for comp
 
 haleyZ —- 2016-12-08 17:00
 successfully pull the locations of the buses en route using SIRI API; ran into issue with getting all stops on the route using OBA API...
+
+haleyZ -- 2016-12-09 10:10
+worked on getting the buses that are approaching a certain stop.
