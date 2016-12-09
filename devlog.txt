@@ -87,3 +87,6 @@ worked on getting the buses that are approaching a certain stop.
 
 jamesW -- 2016-12-09 11:49
 Added basic form on the home page
+
+chloeD -- 2016-12-09 13:57
+met with each member to discuss the work that they have done, solve problems (paticularly the bus problem!), and plan for work over the weekend
