@@ -96,3 +96,6 @@ using the destination of buses to filter the ones going N or S
 
 haleyZ -- 2016-12-10 00:25
 previous approach of filtering destinations didn't work out. ditched the idea. finished the function that makes an html dropdown of the bus stops on a given route.
+
+haleyZ -- 2016-12-10 17:2
+generalized functions that returned subway status to make them also work for LIRR status. Finished function that gets LIRR status.
