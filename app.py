@@ -59,7 +59,6 @@ def logout():
     session.clear()
     return redirect(url_for("index"))
 
-
 @app.route("/test")
 def test():
     d = weather.getInfo(10282)
@@ -67,6 +66,15 @@ def test():
     for key,value in d.iteritems():
         string += (str(key) + ": " + str(value))
     return string
+
+@app.route("/subway")
+def subway():
+    return transit.getSubwayStatus()
+
+@app.route("/LIRR")
+def LIRR():
+    return transit.getLIRRStatus()
+
 
 @app.route("/bus")
 def busTimes():

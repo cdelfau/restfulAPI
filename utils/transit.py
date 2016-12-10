@@ -24,29 +24,28 @@ def gangSignify(text):
     text = text.replace("&gt;", ">")
     return text;
 
-#helper function for getSubwayStatus()
-#takes dictionary of subway line info
-#makes html table for subway status
-def tableifySubwayStatus(d):
+#helper function for getTrainyStatus()
+#takes dictionary of train line info
+#contructs html for a table for train status
+def tableifyStatus(d):
     ret = ""
     ret += "<table>"
-    for status in sorted(d.iterkeys()):
+    for line in sorted(d.iterkeys()):
         ret += "<tr>"
-        ret += "\t<td>" + status + "</td>"
-        ret += "\t<td>" + d[status]["status"] + "</td>"
+        ret += "\t<td>" + line + "</td>"
+        ret += "\t<td>" + d[line]["status"] + "</td>"
         ret += "</tr>"
-
     ret +="</table>"
-
     return ret
 
-#helper function for getSubwayStatus()
-#turns subwayLines (chunk of xml) into a dictionary
-#separates and stores status info for each subway line
+
+#helper function for getTrainStatus()
+#turns trainLines (chunk of xml) into a dictionary
+#separates and stores status info for each train line
 #returns a dictionary
-def dictifySubwayStatus(subwayLines):        
-    subwayStatuses = {}
-    for elem in subwayLines:
+def dictifyTrainStatus(trainLines):        
+    trainStatuses = {}
+    for elem in trainLines:
         findName = elem.find("<name>")
         if findName != -1:
             lineName = getInfoFromInsideTags(elem, "name")
@@ -55,21 +54,31 @@ def dictifySubwayStatus(subwayLines):
             statusDetails = gangSignify(statusDetails)
             statusDetails = statusDetails.replace("\r", "")
             statusDetails = statusDetails.replace("\n", "<br>")
-            subwayStatuses[lineName] = {"status": lineStatus, "details": statusDetails}
-    return subwayStatuses
+            trainStatuses[lineName] = {"status": lineStatus, "details": statusDetails}
+    return trainStatuses
 
-#this function is called by app.py
-#returns table of subway statuses
-def getSubwayStatus():
+#typeOfTrain either "subway" or "LIRR"
+#returns an html table of the statuses
+def getTrainStatus(typeOfTrain):
     response = urllib.urlopen('http://web.mta.info/status/serviceStatus.txt')
     text = response.read();
-    subway = getInfoFromInsideTags(text, "subway")
-    subwayLines = []
-    while (subway.find("<line>") != -1):
-        subwayLines.append(getInfoFromInsideTags(subway, "line"))
-        subway = subway.replace("<line>", "", 1)
-        subway = subway.replace("</line>", "", 1)
-    return tableifySubwayStatus(dictifySubwayStatus(subwayLines))
+    trainInfo = getInfoFromInsideTags(text, typeOfTrain)
+    trainLines = []
+    while (trainInfo.find("<line>") != -1):
+        trainLines.append(getInfoFromInsideTags(trainInfo, "line"))
+        trainInfo = trainInfo.replace("<line>", "", 1)
+        trainInfo = trainInfo.replace("</line>", "", 1)
+    return tableifyStatus(dictifyTrainStatus(trainLines))
+
+#this function is called by app.py
+#returns html table of subway statuses
+def getSubwayStatus():
+    return getTrainStatus("subway")
+
+#this function is called by app.py
+#returns html table of LIRR statuses
+def getLIRRStatus():
+    return getTrainStatus("LIRR")
 
 #currently not used
 '''
