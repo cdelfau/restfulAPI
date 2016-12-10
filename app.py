@@ -70,7 +70,7 @@ def test():
 
 @app.route("/bus")
 def busTimes():
-    return transit.listStopsOnRoute("Q28")
+    return transit.stopsOnRouteDropdown("Q48")
 
 @app.route("/stop")
 def busStop():
@@ -82,8 +82,6 @@ def inject_username():
     if session.get("username"):
         return dict(username=session["username"])
     return dict()
-
-
 
 if __name__ == "__main__":
 

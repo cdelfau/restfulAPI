@@ -24,6 +24,9 @@ def gangSignify(text):
     text = text.replace("&gt;", ">")
     return text;
 
+#helper function for getSubwayStatus()
+#takes dictionary of subway line info
+#makes html table for subway status
 def tableifySubwayStatus(d):
     ret = ""
     ret += "<table>"
@@ -37,6 +40,10 @@ def tableifySubwayStatus(d):
 
     return ret
 
+#helper function for getSubwayStatus()
+#turns subwayLines (chunk of xml) into a dictionary
+#separates and stores status info for each subway line
+#returns a dictionary
 def dictifySubwayStatus(subwayLines):        
     subwayStatuses = {}
     for elem in subwayLines:
@@ -50,7 +57,9 @@ def dictifySubwayStatus(subwayLines):
             statusDetails = statusDetails.replace("\n", "<br>")
             subwayStatuses[lineName] = {"status": lineStatus, "details": statusDetails}
     return subwayStatuses
-             
+
+#this function is called by app.py
+#returns table of subway statuses
 def getSubwayStatus():
     response = urllib.urlopen('http://web.mta.info/status/serviceStatus.txt')
     text = response.read();
@@ -60,9 +69,10 @@ def getSubwayStatus():
         subwayLines.append(getInfoFromInsideTags(subway, "line"))
         subway = subway.replace("<line>", "", 1)
         subway = subway.replace("</line>", "", 1)
-
     return tableifySubwayStatus(dictifySubwayStatus(subwayLines))
 
+#currently not used
+'''
 def listBusLocations(busNum):
     with app.app_context():
         key = app.config["BUSTIME"]
@@ -73,44 +83,38 @@ def listBusLocations(busNum):
         locations = []
         for bus in listOfBuses:
             locations.append( bus['MonitoredVehicleJourney']['MonitoredCall']['StopPointName'])
-            
         return locations
-        
-def listStopsOnRoute(busNum):
+        '''
+
+#this function is called by app.py
+#takes a busNum (ex Q28, M1) -- string
+#returns html code for dropdown menu listing the bus's stops
+def stopsOnRouteDropdown(busNum):
     with app.app_context():
         key = app.config["BUSTIME"]
         response = urllib.urlopen('http://bustime.mta.info/api/where/stops-for-route/MTA%20NYCT_' + busNum + '.json?key=' + key + '&includePolylines=false&version=2')
         text = json.loads(response.read())
         listOfStops = text['data']['references']['stops']
-        return str(listOfStops)
-#        listOfStopNames = []
-        stopNames = ""
-        # for stop in listOfStops:
-        #     listOfStopNames.append(stop['name'])
-        # listOfStopNames.sort()
-        for stop in listOfStops:
-            stopNames += stop['name'] + "<br>"
-
-"""
-    terminal1 = buses[0]['MonitoredVehicleJourney']['DestinationName']
-
-        busToTerm1 = []
-        busToTerm2 = []
-                
-        for bus in buses:
-            if bus['MonitoredVehicleJourney']['DestinationName'] == terminal1:
-                busToTerm1.append(bus['MonitoredVehicleJourney']['MonitoredCall']['Extensions']['Distances']['PresentableDistance'])
-            else:
-                busToTerm2.append(bus['MonitoredVehicleJourney']['MonitoredCall']['Extensions']['Distances']['PresentableDistance'])
-        return str(busToTerm1) + "<br><br>" + str(busToTerm2)
         
+        stopNames = []
+        for stop in listOfStops:
+            nameAndInfo = stop['name'] +  ' (' + stop['direction'] + ') #' + stop['code']
+            stopNames.append(nameAndInfo)
+        stopNames.sort()
+        
+        ret = '''<div class="form-group">
+        <label for="Stop">Stop:</label>
+        <select name="stop" class="form-control" id="stop">'''
+        
+        for name in stopNames:
+            ret += '<option>' + name + '</option>'
 
-            """
+        ret += '</select></div>'
+        return ret
 
-        return stopNames
 
-    
-
+#takes a busNum (ex Q28, M1) and stopID for bus stop (ex 501758) -- both strings
+#returns html of the distances of buses approaching the stop
 def getBusesRelativeToStop(busNum, stopID):
     with app.app_context():
         key = app.config["BUSTIME"]
@@ -119,17 +123,12 @@ def getBusesRelativeToStop(busNum, stopID):
         
         retVal = ""
         buses = text['Siri']['ServiceDelivery']['StopMonitoringDelivery'][0]['MonitoredStopVisit']
-    
-        terminal1 = buses[0]['MonitoredVehicleJourney']['DestinationName']
-
-        busToTerm1 = []
-        busToTerm2 = []
                 
         for bus in buses:
-            if bus['MonitoredVehicleJourney']['DestinationName'] == terminal1:
-                busToTerm1.append(bus['MonitoredVehicleJourney']['MonitoredCall']['Extensions']['Distances']['PresentableDistance'])
-            else:
-                busToTerm2.append(bus['MonitoredVehicleJourney']['MonitoredCall']['Extensions']['Distances']['PresentableDistance'])
-        #retVal += bus['MonitoredVehicleJourney']['MonitoredCall']['Extensions']['Distances']['PresentableDistance'] + "<br>"
- #       return retVal
-        return str(busToTerm1) + "<br><br>" + str(busToTerm2)
+
+            retVal += bus['MonitoredVehicleJourney']['MonitoredCall']['Extensions']['Distances']['PresentableDistance']
+            retVal += "<br>"
+
+        return retVal
+
+
