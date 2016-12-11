@@ -39,12 +39,27 @@
                 <div class="tab-content">
                     <div id="lirr" class="tab-pane fade in active">
                         <h3>LIRR</h3>
+                        {% if transit["lirr"] %}
+                        {% for line in transit["lirr"] %}
+                        {{ line }}: {{ transit["lirr"][line]["status"] }}<br>
+                        {% endfor %}
+                        {% endif %}
                     </div>
                     <div id="trains" class="tab-pane fade">
                         <h3>Trains</h3>
+                        {% if transit["subway"] %}
+                        {% for line in transit["subway"] %}
+                        {{ line }}: {{ transit["subway"][line]["status"] }}<br>
+                        {% endfor %}
+                        {% endif %}
                     </div>
                     <div id="buses" class="tab-pane fade">
                         <h3>Buses</h3>
+                        {% if transit["bus"] %}
+                        {% for stop in transit["bus"] %}
+                        <a href="/buses?bus={{ transit['bus_number'] }}&stop={{ stop[2] }}">{{ stop[0] }} - {{ stop[1] }}</a><br>
+                        {% endfor %}
+                        {% endif %}
                     </div>
                 </div>
             </div>

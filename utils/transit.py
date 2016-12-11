@@ -43,7 +43,7 @@ def tableifyStatus(d):
 #turns trainLines (chunk of xml) into a dictionary
 #separates and stores status info for each train line
 #returns a dictionary
-def dictifyTrainStatus(trainLines):        
+def dictifyTrainStatus(trainLines):
     trainStatuses = {}
     for elem in trainLines:
         findName = elem.find("<name>")
@@ -68,7 +68,7 @@ def getTrainStatus(typeOfTrain):
         trainLines.append(getInfoFromInsideTags(trainInfo, "line"))
         trainInfo = trainInfo.replace("<line>", "", 1)
         trainInfo = trainInfo.replace("</line>", "", 1)
-    return tableifyStatus(dictifyTrainStatus(trainLines))
+    return dictifyTrainStatus(trainLines)
 
 #this function is called by app.py
 #returns html table of subway statuses
@@ -88,7 +88,7 @@ def listBusLocations(busNum):
         response = urllib.urlopen('http://api.prod.obanyc.com/api/siri/vehicle-monitoring.json?key=' + key + "&LineRef=" + busNum+ "&DirectionRef=0")
         text = json.loads(response.read())
         listOfBuses = text['Siri']['ServiceDelivery']['VehicleMonitoringDelivery'][0]['VehicleActivity']
-        
+
         locations = []
         for bus in listOfBuses:
             locations.append( bus['MonitoredVehicleJourney']['MonitoredCall']['StopPointName'])
@@ -98,28 +98,19 @@ def listBusLocations(busNum):
 #this function is called by app.py
 #takes a busNum (ex Q28, M1) -- string
 #returns html code for dropdown menu listing the bus's stops
-def stopsOnRouteDropdown(busNum):
+def stopsOnRoute(busNum):
     with app.app_context():
         key = app.config["BUSTIME"]
         response = urllib.urlopen('http://bustime.mta.info/api/where/stops-for-route/MTA%20NYCT_' + busNum + '.json?key=' + key + '&includePolylines=false&version=2')
         text = json.loads(response.read())
         listOfStops = text['data']['references']['stops']
-        
+
         stopNames = []
         for stop in listOfStops:
-            nameAndInfo = stop['name'] +  ' (' + stop['direction'] + ') #' + stop['code']
+            nameAndInfo = [stop['name'], stop['direction'], stop['code']]
             stopNames.append(nameAndInfo)
         stopNames.sort()
-        
-        ret = '''<div class="form-group">
-        <label for="Stop">Stop:</label>
-        <select name="stop" class="form-control" id="stop">'''
-        
-        for name in stopNames:
-            ret += '<option>' + name + '</option>'
-
-        ret += '</select></div>'
-        return ret
+        return stopNames
 
 
 #takes a busNum (ex Q28, M1) and stopID for bus stop (ex 501758) -- both strings
@@ -129,15 +120,7 @@ def getBusesRelativeToStop(busNum, stopID):
         key = app.config["BUSTIME"]
         response = urllib.urlopen('http://bustime.mta.info/api/siri/stop-monitoring.json?key=' + key + '&OperatorRef=MTA&MonitoringRef=' + stopID + '&LineRef=MTA%20NYCT_' + busNum)
         text = json.loads(response.read())
-        
+
         retVal = ""
         buses = text['Siri']['ServiceDelivery']['StopMonitoringDelivery'][0]['MonitoredStopVisit']
-                
-        for bus in buses:
-
-            retVal += bus['MonitoredVehicleJourney']['MonitoredCall']['Extensions']['Distances']['PresentableDistance']
-            retVal += "<br>"
-
-        return retVal
-
-
+        return buses

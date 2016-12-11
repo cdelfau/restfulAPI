@@ -102,3 +102,6 @@ generalized functions that returned subway status to make them also work for LIR
 
 jamesW -- 2016-12-11 10:02
 Integrated weather functionality with the front end.
+
+jamesW -- 2016-12-11 14:02
+Integrated transit functionality with the front end.

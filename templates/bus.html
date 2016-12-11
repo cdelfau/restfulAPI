@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block body %}
+{% for bus in buses %}
+<li>
+{{ bus["MonitoredVehicleJourney"]["MonitoredCall"]["Extensions"]["Distances"]["PresentableDistance"] }}
+</li>
+{% endfor %}
+{% endblock %}
