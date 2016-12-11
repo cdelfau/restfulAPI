@@ -59,6 +59,21 @@ def logout():
     session.clear()
     return redirect(url_for("index"))
 
+@app.route("/result", methods=["GET", "POST"])
+def result():
+    if request.method == "GET":
+        return ""
+    else:
+        form = request.form
+        try:
+            zip_code = int(form.get("zip_code"))
+        except:
+            return render_template("result.html", message="Malformed request")
+
+        _weather = weather.getInfo(zip_code)
+        return render_template("result.html", weather=_weather)
+    return ""
+
 @app.route("/test")
 def test():
     d = weather.getInfo(10282)
@@ -83,7 +98,7 @@ def busTimes():
 @app.route("/stop")
 def busStop():
     return transit.getBusesRelativeToStop("Q28", "501085")
-    
+
 @app.context_processor
 def inject_username():
     """ Inject the username into each template, so we can render the navbar correctly. """

@@ -99,3 +99,6 @@ previous approach of filtering destinations didn't work out. ditched the idea. f
 
 haleyZ -- 2016-12-10 17:2
 generalized functions that returned subway status to make them also work for LIRR status. Finished function that gets LIRR status.
+
+jamesW -- 2016-12-11 10:02
+Integrated weather functionality with the front end.

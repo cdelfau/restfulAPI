@@ -8,6 +8,21 @@
         <div class="panel panel-default">
             <div class="panel-body">
                 <h3>Weather</h3>
+                {% if weather %}
+                <img src="/static/img/{{ weather["icon"] }}.png" height="50" width="50"><br>
+                Now: {{ weather["summaryNow"] }}<br>
+                This hour: {{ weather["summaryHour"] }}<br>
+                Today: {{ weather["summaryDay"] }}<br>
+                <hr>
+                The minumum temperature will be {{ weather["minTemp"] }} at {{ weather["minTempTime"] }}<br>
+                The current temperature is {{ weather["temp"] }}<br>
+                The maximum temperature will be {{ weather["maxTemp"] }} at {{ weather["maxTempTime"] }}<br>
+                Visibility: {{ weather["visibility"] }}<br>
+                Humidity: {{ weather["humidity"] }}<br>
+                Chance of precipitation: {{ weather["precipProb"] }}%<br>
+                Sunrise: {{ weather["sunrise"] }}<br>
+                Sunset: {{ weather["sunset"] }}
+                {% endif %}
             </div>
         </div>
     </div>
