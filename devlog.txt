@@ -117,3 +117,6 @@ reordered transit display. made jinja ifs to only display the tabs for the trans
 
 jamesW -- 2016-12-12 13:58
 Added embeded map to the result page
+
+haleyZ -- 2016-12-12 13:03
+robustify for bus nums that don't exist.

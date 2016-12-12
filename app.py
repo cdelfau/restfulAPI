@@ -81,7 +81,12 @@ def result():
         bus = form.get("bus")
         if bus:
             bus_number = form.get("borough") + form.get("bus_number")
-            _transit["bus"] = transit.stopsOnRoute(bus_number)
+            busStops = transit.stopsOnRoute(bus_number)
+
+            if busStops == None:
+                _transit["bus"] = "No such bus route"
+            else:
+                _transit["bus"] = busStops
             _transit["bus_number"] = bus_number
 
         _weather = weather.getInfo(zip_code)

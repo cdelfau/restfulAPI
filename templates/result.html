@@ -34,7 +34,7 @@
   <div class="col-md-6">
     <div class="panel panel-default">
       <div class="panel-body">
-
+        <h3>Transit</h3>
         <ul class="nav nav-tabs">
 	  {% if transit["subway"] %}
           <li class="active"><a data-toggle="tab" href="#trains">Subway</a></li>
@@ -73,9 +73,13 @@
           {% if transit["bus"] %}
           <div id="buses" {% if not transit['subway'] %} class="tab-pane fade in active" {% else %} class="tab-pane fade"{% endif %}>
             <h3>Buses</h3>
+	    {% if transit['bus'] == "No such bus route" %}
+	     {{ transit['bus'] }}: {{ transit['bus_number'] }}
+	    {% else %}
             {% for stop in transit["bus"] %}
             <a href="/buses?bus={{ transit['bus_number'] }}&stop={{ stop[2] }}">{{ stop[0] }} - {{ stop[1] }}</a><br>
             {% endfor %}
+	    {% endif %}
           </div>
 	  {% endif %}
 

@@ -103,6 +103,9 @@ def stopsOnRoute(busNum):
         key = app.config["BUSTIME"]
         response = urllib.urlopen('http://bustime.mta.info/api/where/stops-for-route/MTA%20NYCT_' + busNum + '.json?key=' + key + '&includePolylines=false&version=2')
         text = json.loads(response.read())
+        if text['code'] == 404:
+            return None
+        
         listOfStops = text['data']['references']['stops']
 
         stopNames = []
