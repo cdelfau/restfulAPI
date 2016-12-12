@@ -114,3 +114,6 @@ confirmed with all members that their parts were working, especially James and H
 
 haleyZ -- 2016-12-11 23:27
 reordered transit display. made jinja ifs to only display the tabs for the transit options selected
+
+jamesW -- 2016-12-12 13:58
+Added embeded map to the result page

@@ -1,8 +1,13 @@
 {% extends "base.html" %}
 
 {% block body %}
-<div class="jumbotron">
-</div>
+
+<iframe
+    style="width: 100%; height: 100%" frameborder="0" style="border:0"
+    src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCHMik9hzCwdMkRGUy0k8q2FkgmaLNx7BM
+    &q={{ zip_code }}">
+</iframe>
+
 <div class="row">
   <div class="col-md-6">
     <div class="panel panel-default">
@@ -42,11 +47,11 @@
 	  {% if transit["lirr"] %}
           <li{% if not transit['subway'] and not transit['bus']%} class="active"{% endif %}><a data-toggle="tab" href="#lirr">LIRR</a></li>
 	  {% endif %}
-	  
+
         </ul>
 
         <div class="tab-content">
-	  
+
           {% if transit["subway"] %}
           <div id="trains" class="tab-pane fade in active">
             <h3>Trains</h3>
@@ -65,7 +70,7 @@
           </div>
           {% endif %}
 
-          {% if transit["bus"] %}	  
+          {% if transit["bus"] %}
           <div id="buses" {% if not transit['subway'] %} class="tab-pane fade in active" {% else %} class="tab-pane fade"{% endif %}>
             <h3>Buses</h3>
             {% for stop in transit["bus"] %}
@@ -82,7 +87,7 @@
 		<th>Line</th>
 		<th>Service Status</th>
 	      </tr>
-	      
+
               {% for line in transit["lirr"] %}
 	      <tr>
 		<td>{{ line }}</td>
@@ -92,9 +97,9 @@
             </table>
 	  </div>
 	  {% endif %}
-	  
 
-	  
+
+
         </div>
       </div>
     </div>
