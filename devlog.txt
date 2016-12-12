@@ -1,5 +1,8 @@
 A3POINT14 Dev Log
-Remember to add to the Dev Log EVERY TIME you make a commit!!
+Members: Haley Zheng, Chloe Delfau, James Wang, Billy Wong
+Project Manager: Chloe Delfau
+Project Name:
+
 
 chloeD -- 2016-12-02 17:21
 created repo, sent invites to repo for everyone to become "collaborators", made this text file, linked repo to a submodule in upgraded-parakeet
@@ -66,3 +69,42 @@ Added login and registration functionality
 
 billyW -- 2016-12-07 19:38
 adjusted weather api keys location and changed code to fit
+
+jamesW -- 2016-12-07 19:51
+Created basic layout for the home page
+
+billyW -- 2016-12-08 14:01
+looked at google maps embed and last.fm apis
+
+chloeD —- 2016-12-08 14:05
+met with everyone; facilitated discussions amongst members to help plan for component merging; helped plan for additional components because Billy finished with eh weather stuff
+
+haleyZ —- 2016-12-08 17:00
+successfully pull the locations of the buses en route using SIRI API; ran into issue with getting all stops on the route using OBA API...
+
+haleyZ -- 2016-12-09 10:10
+worked on getting the buses that are approaching a certain stop.
+
+jamesW -- 2016-12-09 11:49
+Added basic form on the home page
+
+chloeD -- 2016-12-09 13:57
+met with each member to discuss the work that they have done, solve problems (paticularly the bus problem!), and plan for work over the weekend
+
+haleyZ -- 2016-12-09 14:05
+using the destination of buses to filter the ones going N or S
+
+haleyZ -- 2016-12-10 00:25
+previous approach of filtering destinations didn't work out. ditched the idea. finished the function that makes an html dropdown of the bus stops on a given route.
+
+haleyZ -- 2016-12-10 17:2
+generalized functions that returned subway status to make them also work for LIRR status. Finished function that gets LIRR status.
+
+jamesW -- 2016-12-11 10:02
+Integrated weather functionality with the front end.
+
+jamesW -- 2016-12-11 14:02
+Integrated transit functionality with the front end.
+
+billyW -- 2016-12-11 21:46
+added an util that gets top tracks. (is it accurate/trustworthy?)

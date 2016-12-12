@@ -6,8 +6,8 @@ from flask import current_app as app
 def get():
     with app.app_context():
         key = app.config["LASTFM_KEY"]
-    print "OOOOOOOOOOOOOOOOOOOOOOO: " + key
-    u = urllib2.urlopen("http://ws.audioscrobbler.com/2.0/?method=chart.gettoptracks&api_key=%s&format=json&page=2&limit=50") & (key)
+    url = "http://ws.audioscrobbler.com/2.0/?method=chart.gettoptracks&api_key=%s&format=json&page=2&limit=50" % (key)
+    u = urllib2.urlopen(url)
     response = u.read()
     data = json.loads( response )
     tracks = []

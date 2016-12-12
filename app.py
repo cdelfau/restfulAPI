@@ -5,7 +5,8 @@ from flask import Flask, render_template, request, session, redirect, url_for
 
 import config
 import setup
-from utils import user, weather, topTracks
+
+from utils import user, weather, transit, topTracks
 
 app = Flask(__name__)
 
@@ -59,6 +60,42 @@ def logout():
     session.clear()
     return redirect(url_for("index"))
 
+@app.route("/result", methods=["GET", "POST"])
+def result():
+    if request.method == "GET":
+        return ""
+    else:
+        form = request.form
+        try:
+            zip_code = int(form.get("zip_code"))
+        except:
+            return render_template("result.html", message="Malformed request")
+
+        _transit = {}
+        if form.get("subway"):
+            _transit["subway"] = transit.getSubwayStatus()
+
+        if form.get("lirr"):
+            _transit["lirr"] = transit.getLIRRStatus()
+
+        bus = form.get("bus")
+        if bus:
+            bus_number = form.get("borough") + form.get("bus_number")
+            _transit["bus"] = transit.stopsOnRoute(bus_number)
+            _transit["bus_number"] = bus_number
+
+        _weather = weather.getInfo(zip_code)
+        return render_template("result.html", weather=_weather, transit=_transit)
+    return ""
+
+@app.route("/buses", methods=["GET"])
+def bus():
+    bus_number = request.args.get("bus")
+    stop = request.args.get("stop")
+    buses = []
+    if stop:
+        buses = transit.getBusesRelativeToStop(bus_number, stop)
+    return render_template("bus.html", buses=buses)
 
 @app.route("/testWeather")
 def test():
@@ -68,14 +105,32 @@ def test():
         string += (str(key) + ": " + str(value))
     return string
 
-
 @app.route("/testTracks")
 def test2():
     t = topTracks.get()
     string = ""
     for song in t:
-        string += (song + "\n")
+        string += song
+        string += '\n'
     return string
+
+@app.route("/subway")
+def subway():
+    return transit.getSubwayStatus()
+
+@app.route("/LIRR")
+def LIRR():
+    return transit.getLIRRStatus()
+
+
+@app.route("/bus")
+def busTimes():
+    return transit.stopsOnRouteDropdown("Q48")
+
+@app.route("/stop")
+def busStop():
+    return transit.getBusesRelativeToStop("Q28", "501085")
+
 
 @app.context_processor
 def inject_username():
@@ -83,7 +138,6 @@ def inject_username():
     if session.get("username"):
         return dict(username=session["username"])
     return dict()
-
 
 if __name__ == "__main__":
 

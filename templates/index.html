@@ -1,1 +1,39 @@
 {% extends "base.html" %}
+
+{% block body %}
+<form method="POST" action="/result">
+    <div>
+        <div class="row">
+            <div class="col-md-3">
+                <input name="zip_code" type="number" class="form-control" placeholder="Zip code">
+            </div>
+        </div>
+        <label><input name="subway" type="checkbox">Subway</label>
+        <label><input name="lirr" type="checkbox">LIRR</label>
+        <label><input name="bus" type="checkbox">Bus</label>
+
+        <br>
+        <div class="row">
+            <div class="col-md-3">
+                <input type="number" class="form-control" name="bus_number" placeholder="Bus Number">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="borough">Borough:</label>
+                    <select name="borough" class="form-control" id="borough">
+                        <option value="Q">Queens</option>
+                        <option value="M">Manhattan</option>
+                        <option value="Bx">Bronx</option>
+                        <option value="B">Brooklyn</option>
+                        <option value="X">Staten Island</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <input type="submit" class="btn btn-primary" value="Search">
+    </div>
+</form>
+{% endblock %}
