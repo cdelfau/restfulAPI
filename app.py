@@ -69,7 +69,7 @@ def result():
         try:
             zip_code = int(form.get("zip_code"))
         except:
-            return render_template("result.html", message="Malformed request")
+            return render_template("result.html", message="Malformed request", transit={})
 
         _transit = {}
         if form.get("subway"):
@@ -81,11 +81,16 @@ def result():
         bus = form.get("bus")
         if bus:
             bus_number = form.get("borough") + form.get("bus_number")
-            _transit["bus"] = transit.stopsOnRoute(bus_number)
+            busStops = transit.stopsOnRoute(bus_number)
+
+            if busStops == None:
+                _transit["bus"] = "No such bus route"
+            else:
+                _transit["bus"] = busStops
             _transit["bus_number"] = bus_number
 
         _weather = weather.getInfo(zip_code)
-        return render_template("result.html", weather=_weather, transit=_transit)
+        return render_template("result.html", weather=_weather, transit=_transit, zip_code=zip_code)
     return ""
 
 @app.route("/buses", methods=["GET"])
