@@ -4,66 +4,100 @@
 <div class="jumbotron">
 </div>
 <div class="row">
-    <div class="col-md-6">
-        <div class="panel panel-default">
-            <div class="panel-body">
-                <h3>Weather</h3>
-                {% if weather %}
-                <img src="/static/img/{{ weather["icon"] }}.png" height="50" width="50"><br>
-                Now: {{ weather["summaryNow"] }}<br>
-                This hour: {{ weather["summaryHour"] }}<br>
-                Today: {{ weather["summaryDay"] }}<br>
-                <hr>
-                The minumum temperature will be {{ weather["minTemp"] }} at {{ weather["minTempTime"] }}<br>
-                The current temperature is {{ weather["temp"] }}<br>
-                The maximum temperature will be {{ weather["maxTemp"] }} at {{ weather["maxTempTime"] }}<br>
-                Visibility: {{ weather["visibility"] }}<br>
-                Humidity: {{ weather["humidity"] }}<br>
-                Chance of precipitation: {{ weather["precipProb"] }}%<br>
-                Sunrise: {{ weather["sunrise"] }}<br>
-                Sunset: {{ weather["sunset"] }}
-                {% endif %}
-            </div>
-        </div>
+  <div class="col-md-6">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <h3>Weather</h3>
+        {% if weather %}
+        <img src="/static/img/{{ weather["icon"] }}.png" height="50" width="50"><br>
+        Now: {{ weather["summaryNow"] }}<br>
+        This hour: {{ weather["summaryHour"] }}<br>
+        Today: {{ weather["summaryDay"] }}<br>
+        <hr>
+        The minumum temperature will be {{ weather["minTemp"] }} at {{ weather["minTempTime"] }}<br>
+        The current temperature is {{ weather["temp"] }}<br>
+        The maximum temperature will be {{ weather["maxTemp"] }} at {{ weather["maxTempTime"] }}<br>
+        Visibility: {{ weather["visibility"] }}<br>
+        Humidity: {{ weather["humidity"] }}<br>
+        Chance of precipitation: {{ weather["precipProb"] }}%<br>
+        Sunrise: {{ weather["sunrise"] }}<br>
+        Sunset: {{ weather["sunset"] }}
+        {% endif %}
+      </div>
     </div>
-    <div class="col-md-6">
-        <div class="panel panel-default">
-            <div class="panel-body">
+  </div>
+  <div class="col-md-6">
+    <div class="panel panel-default">
+      <div class="panel-body">
 
-                <ul class="nav nav-tabs">
-                    <li class="active"><a data-toggle="tab" href="#lirr">LIRR</a></li>
-                    <li><a data-toggle="tab" href="#trains">Trains</a></li>
-                    <li><a data-toggle="tab" href="#buses">Buses</a></li>
-                </ul>
+        <ul class="nav nav-tabs">
+	  {% if transit["subway"] %}
+          <li class="active"><a data-toggle="tab" href="#trains">Subway</a></li>
+	  {% endif %}
 
-                <div class="tab-content">
-                    <div id="lirr" class="tab-pane fade in active">
-                        <h3>LIRR</h3>
-                        {% if transit["lirr"] %}
-                        {% for line in transit["lirr"] %}
-                        {{ line }}: {{ transit["lirr"][line]["status"] }}<br>
-                        {% endfor %}
-                        {% endif %}
-                    </div>
-                    <div id="trains" class="tab-pane fade">
-                        <h3>Trains</h3>
-                        {% if transit["subway"] %}
-                        {% for line in transit["subway"] %}
-                        {{ line }}: {{ transit["subway"][line]["status"] }}<br>
-                        {% endfor %}
-                        {% endif %}
-                    </div>
-                    <div id="buses" class="tab-pane fade">
-                        <h3>Buses</h3>
-                        {% if transit["bus"] %}
-                        {% for stop in transit["bus"] %}
-                        <a href="/buses?bus={{ transit['bus_number'] }}&stop={{ stop[2] }}">{{ stop[0] }} - {{ stop[1] }}</a><br>
-                        {% endfor %}
-                        {% endif %}
-                    </div>
-                </div>
-            </div>
+	  {% if transit["bus"] %}
+          <li{% if not transit['subway'] %} class="active"{% endif %}><a data-toggle="tab" href="#buses">Buses</a></li>
+	  {% endif %}
+
+	  {% if transit["lirr"] %}
+          <li{% if not transit['subway'] and not transit['bus']%} class="active"{% endif %}><a data-toggle="tab" href="#lirr">LIRR</a></li>
+	  {% endif %}
+	  
+        </ul>
+
+        <div class="tab-content">
+	  
+          {% if transit["subway"] %}
+          <div id="trains" class="tab-pane fade in active">
+            <h3>Trains</h3>
+	    <table class="table">
+	      <tr>
+		<th>Line</th>
+		<th>Service Status</th>
+	      </tr>
+              {% for line in transit["subway"] %}
+	      <tr>
+		<td>{{ line }}</td>
+		<td>{{ transit["subway"][line]["status"] }}</td>
+	      </tr>
+              {% endfor %}
+	    </table>
+          </div>
+          {% endif %}
+
+          {% if transit["bus"] %}	  
+          <div id="buses" {% if not transit['subway'] %} class="tab-pane fade in active" {% else %} class="tab-pane fade"{% endif %}>
+            <h3>Buses</h3>
+            {% for stop in transit["bus"] %}
+            <a href="/buses?bus={{ transit['bus_number'] }}&stop={{ stop[2] }}">{{ stop[0] }} - {{ stop[1] }}</a><br>
+            {% endfor %}
+          </div>
+	  {% endif %}
+
+         {% if transit["lirr"] %}
+	  <div id="lirr"{% if not transit['subway'] and not transit['buses'] %} class="tab-pane fade in active" {% else %} class="tab-pane fade"{% endif %}>
+            <h3>LIRR</h3>
+	    <table class="table">
+	      <tr>
+		<th>Line</th>
+		<th>Service Status</th>
+	      </tr>
+	      
+              {% for line in transit["lirr"] %}
+	      <tr>
+		<td>{{ line }}</td>
+		<td>{{ transit["lirr"][line]["status"] }}</td>
+	      </tr>
+              {% endfor %}
+            </table>
+	  </div>
+	  {% endif %}
+	  
+
+	  
         </div>
+      </div>
     </div>
+  </div>
 </div>
 {% endblock %}
