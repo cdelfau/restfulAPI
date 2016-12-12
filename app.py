@@ -5,7 +5,7 @@ from flask import Flask, render_template, request, session, redirect, url_for
 
 import config
 import setup
-from utils import user, weather
+from utils import user, weather, topTracks
 
 app = Flask(__name__)
 
@@ -60,12 +60,21 @@ def logout():
     return redirect(url_for("index"))
 
 
-@app.route("/test")
+@app.route("/testWeather")
 def test():
     d = weather.getInfo(10282)
     string = ""
     for key,value in d.iteritems():
         string += (str(key) + ": " + str(value))
+    return string
+
+
+@app.route("/testTracks")
+def test2():
+    t = topTracks.get()
+    string = ""
+    for song in t:
+        string += (song + "\n")
     return string
 
 @app.context_processor
