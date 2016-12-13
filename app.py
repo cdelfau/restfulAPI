@@ -116,7 +116,7 @@ def test2():
     string = ""
     for song in t:
         string += song
-        string += '\n'
+        string += '</br>'
     return string
 
 @app.route("/subway")

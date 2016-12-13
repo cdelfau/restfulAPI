@@ -120,3 +120,6 @@ Added embeded map to the result page
 
 haleyZ -- 2016-12-12 13:03
 robustify for bus nums that don't exist.
+
+billyW -- 2016-12-12 20:49
+changed topTracks util to get 10 random top songs, instead of the top 10 most popular songs. bug: has a ~1/450 of chosing the same song twice.
