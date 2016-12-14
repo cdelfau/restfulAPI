@@ -23,13 +23,13 @@ def get_user(**kwargs):
     db.close()
     return result
 
-def add_user(username, password, zip_code):
+def add_user(username, password):
     db = sqlite3.connect(DATABASE)
     c = db.cursor()
     password = hashlib.sha256(password).hexdigest()
 
-    query = "INSERT INTO users VALUES (NULL, ?, ?, ?, 0, 0, '', 0)"
-    c.execute(query, (username, password, zip_code,))
+    query = "INSERT INTO users VALUES (NULL, ?, ?, '', 0, 0, '', 0)"
+    c.execute(query, (username, password,))
     db.commit()
     db.close()
 
@@ -43,14 +43,14 @@ def save_settings(username, settings):
         subway = 1
     else:
         subway = 0
-        
+
     if "bus" in settings:
         bus = 1
         busNum = settings['busNum']
     else:
         bus = 0
         busNum = ''
-        
+
     if "lirr" in settings:
         lirr = 1;
     else:
@@ -59,7 +59,7 @@ def save_settings(username, settings):
     query = "UPDATE users SET zip_code = ?, subway = ?, bus = ?, busNum = ?, lirr = ? WHERE username = ?"
 
     print username
-    
+
     c.execute(query, (zip_code, subway, bus, busNum, lirr, username))
     db.commit()
     db.close()

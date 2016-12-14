@@ -46,21 +46,20 @@ def register():
     if request.method == "GET":
         return render_template("register.html")
     else:
-        if not validate_form(request.form, ["username", "password", "confirm_password", "zip_code"]):
+        if not validate_form(request.form, ["username", "password", "confirm_password"]):
             return render_template("register.html", message="Malformed request", category="danger")
         form = request.form
         username = form.get("username")
         password = form.get("password")
         password = form.get("password")
         confirm_password = form.get("confirm_password")
-        zip_code = form.get("zip_code")
         if password != confirm_password:
             return render_template("register.html", message="Passwords do not match", category="danger")
         _user = user.get_user(username=username)
         if _user:
             return render_template("register.html", message="Username already in use.", category="danger")
         else:
-            user.add_user(username, password, zip_code)
+            user.add_user(username, password)
             return render_template("register.html", message="Account created", category="success")
 
 @app.route("/logout")
