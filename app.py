@@ -70,7 +70,8 @@ def result():
             zip_code = int(form.get("zip_code"))
         except:
             return render_template("result.html", message="Malformed request", transit={})
-
+        if form.get("save"):
+            saveSettings(form)
         _transit = {}
         if form.get("subway"):
             _transit["subway"] = transit.getSubwayStatus()
@@ -136,6 +137,15 @@ def busTimes():
 def busStop():
     return transit.getBusesRelativeToStop("Q28", "501085")
 
+def saveSettings(form):
+    d = {}
+    fields = ['zip_code', 'subway', 'bus', 'lirr']
+    for field in fields:
+        if field in form:
+          d[field] = form[field]
+    if 'bus' in d:
+        d['busNum'] = form['borough'] + form['bus_number']
+    user.save_settings(inject_username()['username'], d)
 
 @app.context_processor
 def inject_username():
