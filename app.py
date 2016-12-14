@@ -15,6 +15,14 @@ def validate_form(form, required_keys):
 
 @app.route("/")
 def index():
+    if "username" in session:
+        success, _weather, _transit, zip_code = autoResult()
+        if success:
+            return render_template("result.html", weather=_weather, transit=_transit, zip_code=zip_code)
+    return render_template("index.html")
+
+@app.route("/search")
+def search():
     return render_template("index.html")
 
 @app.route("/login", methods=["POST", "GET"])
@@ -94,6 +102,29 @@ def result():
         return render_template("result.html", weather=_weather, transit=_transit, zip_code=zip_code)
     return ""
 
+def autoResult():
+    _transit = {}
+    username = inject_username()['username']
+    d = user.get_settings(username)
+    zip_code = d['zip_code']
+
+    if zip_code == "":
+        return 0, {}, {}, ""
+    
+    if d['subway'] == 1:
+        _transit['subway'] = transit.getSubwayStatus()
+    if d['bus'] == 1:
+        busStops = transit.stopsOnRoute(d['busNum'])
+        if busStops == None:
+            _transit["bus"] = "No such bus route"
+        else:
+            _transit["bus"] = busStops
+        _transit['bus_number'] = d['busNum']
+    if d['lirr'] == 1:
+        _transit['lirr'] = transit.getLIRRStatus()
+    _weather = weather.getInfo(zip_code)
+    return 1, _weather, _transit, zip_code
+                
 @app.route("/buses", methods=["GET"])
 def bus():
     bus_number = request.args.get("bus")

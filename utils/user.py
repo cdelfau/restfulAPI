@@ -63,4 +63,21 @@ def save_settings(username, settings):
     c.execute(query, (zip_code, subway, bus, busNum, lirr, username))
     db.commit()
     db.close()
+
+def get_settings(username):
+    db = sqlite3.connect(DATABASE)
+    c = db.cursor()
+    fields = ["zip_code", "subway", "bus", "busNum", "lirr"]
+    query = "SELECT %s FROM users WHERE username = '%s'" % (", ".join(fields), username)
+    c.execute(query)
+    db.commit()
+    result = c.fetchone()
+    db.close()
+
+    d = {}
+    i = 0
+    while (i < len(fields)):
+        d[fields[i]] = result[i]
+        i += 1
     
+    return d;
