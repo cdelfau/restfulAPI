@@ -73,6 +73,10 @@ def get_settings(username):
     db.close()
 
     d = {}
+
+    if not result:
+        return d
+
     i = 0
     while (i < len(fields)):
         if result[i]:
