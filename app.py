@@ -74,7 +74,7 @@ def result():
         try:
             zip_code = int(form.get("zip_code"))
         except:
-            return render_template("result.html", message="Malformed request", transit={})
+            return render_template("index.html", message="Malformed request", category="danger")
         if form.get("save"):
             saveSettings(form)
         _transit = {}
