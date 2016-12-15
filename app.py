@@ -15,9 +15,9 @@ def validate_form(form, required_keys):
 @app.route("/")
 def index():
     if "username" in session:
-        success, _weather, _transit, zip_code = autoResult()
+        success, _weather, _transit, zip_code, tracks = autoResult()
         if success:
-            return render_template("result.html", weather=_weather, transit=_transit, zip_code=zip_code)
+            return render_template("result.html", weather=_weather, transit=_transit, zip_code=zip_code, tracks=tracks)
     return render_template("index.html")
 
 @app.route("/search")
@@ -96,7 +96,10 @@ def result():
             _transit["bus_number"] = bus_number
 
         _weather = weather.getInfo(zip_code)
-        return render_template("result.html", weather=_weather, transit=_transit, zip_code=zip_code)
+        tracks = None
+        if session.get("username"):
+            tracks = topTracks.get()
+        return render_template("result.html", weather=_weather, transit=_transit, zip_code=zip_code, tracks=tracks)
     return ""
 
 def autoResult():
@@ -120,7 +123,8 @@ def autoResult():
     if d.get('lirr') == 1:
         _transit['lirr'] = transit.getLIRRStatus()
     _weather = weather.getInfo(zip_code)
-    return 1, _weather, _transit, zip_code
+    tracks = topTracks.get()
+    return 1, _weather, _transit, zip_code, tracks
 
 @app.route("/buses", methods=["GET"])
 def bus():

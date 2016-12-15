@@ -22,7 +22,7 @@ def get():
                 ind = random.randint(0,len(obj)-1)
             chosenI.append(ind)
             print "INDEX: " + str(ind)
-            track =  obj[ind]['name'].encode("utf-8")
-            artist = obj[ind]['artist']['name'].encode("utf-8")
+            track =  obj[ind]['name'].encode("ascii", "ignore").decode("ascii")
+            artist = obj[ind]['artist']['name'].encode("ascii", "ignore").decode("ascii")
             tracks.append(track + " by " + artist)
     return tracks
