@@ -7,7 +7,7 @@ from flask import current_app as app
 def get():
     tracks = []
     with app.app_context():
-        key = app.config["LASTFM_KEY"]
+        key = app.config.get("LASTFM_KEY")
     for i in range (0,2):
         page = random.randint(2,10)
         url = "http://ws.audioscrobbler.com/2.0/?method=chart.gettoptracks&api_key=%s&format=json&page=%d" % (key,page)

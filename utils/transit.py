@@ -100,12 +100,15 @@ def listBusLocations(busNum):
 #returns html code for dropdown menu listing the bus's stops
 def stopsOnRoute(busNum):
     with app.app_context():
-        key = app.config["BUSTIME"]
+        key = app.config.get("BUSTIME", "")
         response = urllib.urlopen('http://bustime.mta.info/api/where/stops-for-route/MTA%20NYCT_' + busNum + '.json?key=' + key + '&includePolylines=false&version=2')
         text = json.loads(response.read())
         if text['code'] == 404:
             return None
-        
+
+        if not text["data"]:
+            return None
+
         listOfStops = text['data']['references']['stops']
 
         stopNames = []
@@ -120,7 +123,7 @@ def stopsOnRoute(busNum):
 #returns html of the distances of buses approaching the stop
 def getBusesRelativeToStop(busNum, stopID):
     with app.app_context():
-        key = app.config["BUSTIME"]
+        key = app.config.get("BUSTIME")
         response = urllib.urlopen('http://bustime.mta.info/api/siri/stop-monitoring.json?key=' + key + '&OperatorRef=MTA&MonitoringRef=' + stopID + '&LineRef=MTA%20NYCT_' + busNum)
         text = json.loads(response.read())
 

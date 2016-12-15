@@ -11,9 +11,6 @@ from urllib2 import HTTPError
 #https://darksky.net/dev/docs/forecast
 #https://openweathermap.org/current
 
-def getInfo():
-    return getInfo(10282)
-
 def getInfo(ZIP):
 
     info = {}
@@ -21,13 +18,17 @@ def getInfo(ZIP):
     ZIP = int(ZIP)
 
     with app.app_context():
-        key1 = app.config["OPENWEATHER_KEY"]
-        key2 = app.config["DARKSKY_KEY"]
+        key1 = app.config.get("OPENWEATHER_KEY")
+        key2 = app.config.get("DARKSKY_KEY")
 
     #OpenWeatherMap to get coordinates
     url = "http://api.openweathermap.org/data/2.5/weather?zip=%d,us" % (ZIP)
     url += "&APPID=%s" % (key1)
-    u = urllib2.urlopen(url)
+    try:
+        u = urllib2.urlopen(url)
+    except:
+        return {}
+
     response = u.read()
     owm = json.loads( response )
     lat = owm['coord']['lat']
