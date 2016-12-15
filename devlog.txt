@@ -139,5 +139,8 @@ Robustified settings code
 jamesW -- 2016-12-14 23:35
 Integrated songs into the results page
 
+jamesW -- 2016-12-15 00:52
+Added more error checks
+
 chloeD -- 2016-12-15 1:17
 spoke with all members to check in and make sure everythign was 100% done; messed around with the program for a bit to try to catch any bugs or see where the webpage would fail; updated teammates with my findings; updated README with instructions; emailed Mr. Brown-Mykolyk API keys
