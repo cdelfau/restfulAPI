@@ -132,3 +132,6 @@ Changed sqlite fields. Finished implementing the User Saved Settings feature. Ch
 
 jamesW -- 2016-12-14 19:52
 Robustified settings code
+
+jamesW -- 2016-12-14 23:35
+Integrated songs into the results page
