@@ -129,3 +129,6 @@ Added checkbox for saving selection (html only)
 
 haleyZ -- 2016-12-14 00:27
 Changed sqlite fields. Finished implementing the User Saved Settings feature. Changed / such that if you are logged in you automatically get results, not the form. Added New Search tab for if you want to do a different search/change the settings.
+
+jamesW -- 2016-12-14 19:52
+Robustified settings code

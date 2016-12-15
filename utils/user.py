@@ -77,7 +77,8 @@ def get_settings(username):
     d = {}
     i = 0
     while (i < len(fields)):
-        d[fields[i]] = result[i]
+        if result[i]:
+            d[fields[i]] = result[i]
         i += 1
-    
+
     return d;

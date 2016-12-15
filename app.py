@@ -70,7 +70,7 @@ def logout():
 @app.route("/result", methods=["GET", "POST"])
 def result():
     if request.method == "GET":
-        return ""
+        return redirect(url_for("index"))
     else:
         form = request.form
         try:
@@ -103,27 +103,27 @@ def result():
 
 def autoResult():
     _transit = {}
-    username = inject_username()['username']
+    username = session.get("username")
     d = user.get_settings(username)
-    zip_code = d['zip_code']
+    zip_code = d.get('zip_code')
 
-    if zip_code == "":
+    if not zip_code:
         return 0, {}, {}, ""
-    
-    if d['subway'] == 1:
+
+    if d.get('subway') == 1:
         _transit['subway'] = transit.getSubwayStatus()
-    if d['bus'] == 1:
+    if d.get('bus') == 1:
         busStops = transit.stopsOnRoute(d['busNum'])
         if busStops == None:
             _transit["bus"] = "No such bus route"
         else:
             _transit["bus"] = busStops
         _transit['bus_number'] = d['busNum']
-    if d['lirr'] == 1:
+    if d.get('lirr') == 1:
         _transit['lirr'] = transit.getLIRRStatus()
     _weather = weather.getInfo(zip_code)
     return 1, _weather, _transit, zip_code
-                
+
 @app.route("/buses", methods=["GET"])
 def bus():
     bus_number = request.args.get("bus")
@@ -133,40 +133,6 @@ def bus():
         buses = transit.getBusesRelativeToStop(bus_number, stop)
     return render_template("bus.html", buses=buses)
 
-@app.route("/testWeather")
-def test():
-    d = weather.getInfo(10282)
-    string = ""
-    for key,value in d.iteritems():
-        string += (str(key) + ": " + str(value))
-    return string
-
-@app.route("/testTracks")
-def test2():
-    t = topTracks.get()
-    string = ""
-    for song in t:
-        string += song
-        string += '</br>'
-    return string
-
-@app.route("/subway")
-def subway():
-    return transit.getSubwayStatus()
-
-@app.route("/LIRR")
-def LIRR():
-    return transit.getLIRRStatus()
-
-
-@app.route("/bus")
-def busTimes():
-    return transit.stopsOnRouteDropdown("Q48")
-
-@app.route("/stop")
-def busStop():
-    return transit.getBusesRelativeToStop("Q28", "501085")
-
 def saveSettings(form):
     d = {}
     fields = ['zip_code', 'subway', 'bus', 'lirr']
@@ -175,13 +141,14 @@ def saveSettings(form):
           d[field] = form[field]
     if 'bus' in d:
         d['busNum'] = form['borough'] + form['bus_number']
-    user.save_settings(inject_username()['username'], d)
+    user.save_settings(session.get('username'), d)
 
 @app.context_processor
 def inject_username():
     """ Inject the username into each template, so we can render the navbar correctly. """
-    if session.get("username"):
-        return dict(username=session["username"])
+    username = session.get("username")
+    if username:
+        return dict(username=username)
     return dict()
 
 if __name__ == "__main__":
