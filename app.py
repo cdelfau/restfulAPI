@@ -1,5 +1,4 @@
 import hashlib
-import os
 
 from flask import Flask, render_template, request, session, redirect, url_for
 
@@ -50,7 +49,6 @@ def register():
             return render_template("register.html", message="Malformed request", category="danger")
         form = request.form
         username = form.get("username")
-        password = form.get("password")
         password = form.get("password")
         confirm_password = form.get("confirm_password")
         if password != confirm_password:
@@ -154,7 +152,6 @@ def inject_username():
 if __name__ == "__main__":
 
     setup.initialize_tables()
-    app.secret_key = config.SECRET_KEY
     app.config.from_object(config)
 
     app.debug = True

@@ -10,9 +10,7 @@ with open(".secret_key", "a+b") as f:
 
 SECRET_KEY = key
 
-options = {
-    "DATABASE": "database.db"
-}
+g = globals()
 
 if os.path.exists(".env"):
     data = open(".env", "r")
@@ -20,4 +18,4 @@ if os.path.exists(".env"):
         if "=" in line:
             key = line.split("=")[0]
             value = line.split(key + "=")[1].strip("\n").strip("\r")
-            globals()[key] = value
+            g[key] = value

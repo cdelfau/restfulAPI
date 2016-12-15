@@ -58,8 +58,6 @@ def save_settings(username, settings):
 
     query = "UPDATE users SET zip_code = ?, subway = ?, bus = ?, busNum = ?, lirr = ? WHERE username = ?"
 
-    print username
-
     c.execute(query, (zip_code, subway, bus, busNum, lirr, username))
     db.commit()
     db.close()
