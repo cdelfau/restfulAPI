@@ -109,7 +109,7 @@ def autoResult():
     zip_code = d.get('zip_code')
 
     if not zip_code:
-        return 0, {}, {}, ""
+        return 0, {}, {}, "", []
 
     if d.get('subway') == 1:
         _transit['subway'] = transit.getSubwayStatus()
